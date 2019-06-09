@@ -12,10 +12,6 @@
 # Usage:
 #   include(mola_cmake_functions)
 #
-# Main functions (refer to their docs below)
-#  - mola_add_library()
-#  - mola_add_executable()
-#
 
 
 # Avoid the need for DLL export/import macros in Windows:
@@ -55,7 +51,9 @@ endif()
 if (WIN32)
   set(MOLA_DLL_VERSION_POSTFIX
     "${MOLA_VERSION_NUMBER_MAJOR}${MOLA_VERSION_NUMBER_MINOR}${MOLA_VERSION_NUMBER_PATCH}_${MOLA_COMPILER_NAME}_x${MOLA_WORD_SIZE}")
-  message(STATUS "Using DLL version postfix: ${MOLA_DLL_VERSION_POSTFIX}")
+  if ($ENV{VERBOSE})
+  	message(STATUS "Using DLL version postfix: ${MOLA_DLL_VERSION_POSTFIX}")
+  endif()
 else()
   set(MOLA_DLL_VERSION_POSTFIX "")
 endif()
@@ -190,7 +188,7 @@ function(mola_configure_app TARGETNAME)
   # Project "folder":
   set_target_properties(${TARGETNAME} PROPERTIES FOLDER "MOLA-apps")
 
-  #TODO: install?
+  #TODO: install
 
 endfunction()
 
@@ -229,6 +227,9 @@ function(mola_add_library)
 	    PRIVATE
 	    ${MOLA_ADD_LIBRARY_PRIVATE_LINK_LIBRARIES}
     )
+
+	#TODO: install
+
 endfunction()
 
 # -----------------------------------------------------------------------------
