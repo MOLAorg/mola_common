@@ -177,7 +177,8 @@ function(mola_configure_library TARGETNAME)
   # make project importable from build_dir:
   export(
     TARGETS ${TARGETNAME}
-    FILE ${TARGETNAME}-config.cmake
+    # export to ROOT cmake directory (when building MOLA as a superproject)
+    FILE ${CMAKE_BINARY_DIR}/${TARGETNAME}-config.cmake
   )
 
 endfunction()
