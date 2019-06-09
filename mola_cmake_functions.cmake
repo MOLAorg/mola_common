@@ -17,6 +17,8 @@ if (NOT DEFINED MOLA_VERSION_NUMBER_MAJOR)
 	message(ERROR "MOLA_VERSION_NUMBER_MAJOR not defined: use `find_package(mola-common)`")
 endif()
 
+include(GNUInstallDirs) # for install dirs in multilib
+
 # Avoid the need for DLL export/import macros in Windows:
 if (WIN32)
   set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS  ON)
