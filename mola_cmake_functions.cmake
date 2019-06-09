@@ -13,6 +13,9 @@
 #   include(mola_cmake_functions)
 #
 
+if (NOT DEFINED MOLA_VERSION_NUMBER_MAJOR)
+	message(ERROR "MOLA_VERSION_NUMBER_MAJOR not defined: use `find_package(mola-common)`")
+endif()
 
 # Avoid the need for DLL export/import macros in Windows:
 if (WIN32)

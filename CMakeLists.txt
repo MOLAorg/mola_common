@@ -7,8 +7,14 @@
 # Released under GNU GPL v3. See LICENSE file
 # ------------------------------------------------------------------------------
 
+# Minimum CMake vesion: limited by CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS
+cmake_minimum_required(VERSION 3.4)
+
 # Tell CMake we'll use C++ for use in its tests/flags
 project(mola-common)
+
+# Project version:
+include(mola-version.cmake)
 
 # Generate: mola-common-version.cmake
 include(CMakePackageConfigHelpers)
@@ -17,15 +23,26 @@ if(NOT ${CMAKE_VERSION} VERSION_LESS "3.14.0")
 	set(ARCH_INDEP_FLAG "ARCH_INDEPENDENT")
 endif()
 
-write_basic_package_version_file(mola-common-version.cmake
-  VERSION 0.1.0
-  COMPATIBILITY AnyNewerVersion
-  $ARCH_INDEP_FLAG
+write_basic_package_version_file(
+	# generate to the topmost root binary dir:
+	${CMAKE_BINARY_DIR}/mola-common-version.cmake
+  	VERSION ${MOLA_VERSION_NUMBER_MAJOR}.${MOLA_VERSION_NUMBER_MINOR}.${MOLA_VERSION_NUMBER_PATCH}
+  	COMPATIBILITY AnyNewerVersion
+  	${ARCH_INDEP_FLAG}
 )
 
 # Generate: mola-common.cmake
-# For now, it's static, so no need to parse the file.
+configure_file(
+	# Input:
+	mola-common-config.cmake.in
+	# Output: generate to the topmost root binary dir:
+	${CMAKE_BINARY_DIR}/mola-common-config.cmake
+	# Parse: "@var_names@" only
+	@ONLY
+)
 
+# Allow build-time finding of this package:
+set(mola-common_DIR ${CMAKE_CURRENT_SOURCE_DIR} CACHE PATH "Path to mola-common")
 
 # Install files:
 # TODO

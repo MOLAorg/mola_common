@@ -7,12 +7,9 @@
 # Released under GNU GPL v3. See LICENSE file
 # ------------------------------------------------------------------------------
 
-# mola-common: Defined common CMake variables and functions to unify building
-# of all MOLA modules.
-#
-# Main functions (refer to their docs in mola_cmake_functions.cmake):
-#  - mola_add_library()
-#  - mola_add_executable()
-#
+# Part of the mola-common repository.
 
-include(mola_cmake_functions)
+# This is the master file that defines the "official" version of the MOLA system
+set(MOLA_VERSION_NUMBER_MAJOR 0)
+set(MOLA_VERSION_NUMBER_MINOR 1)
+set(MOLA_VERSION_NUMBER_PATCH 0)
