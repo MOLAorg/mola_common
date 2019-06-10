@@ -74,6 +74,19 @@ set(CMAKE_STATIC_LIBRARY_PREFIX "lib")
 set(CMAKE_DEBUG_POSTFIX "-dbg")
 
 # -----------------------------------------------------------------------------
+# find_mola_package(package_name)
+#
+# Does nothing if the target is known at build time, or issues the corresponding
+# standard CMake find_package().
+# -----------------------------------------------------------------------------
+function(find_mola_package PACKAGE_NAME)
+    if (NOT TARGET ${PACKAGE_NAME})
+        find_package(${PACKAGE_NAME} REQUIRED)
+    endif()
+    #TODO: use mola namespace (mola::xxx)?
+endfunction()
+
+# -----------------------------------------------------------------------------
 # mola_set_target_cxx17(target)
 #
 # Enabled C++17 for the given target
