@@ -81,7 +81,10 @@ set(CMAKE_DEBUG_POSTFIX "-dbg")
 # -----------------------------------------------------------------------------
 function(find_mola_package PACKAGE_NAME)
     if (NOT TARGET ${PACKAGE_NAME})
+        mola_message_verbose("find_mola_package: ${PACKAGE_NAME} not a known target, using find_package().")
         find_package(${PACKAGE_NAME} REQUIRED)
+      else()
+        mola_message_verbose("find_mola_package: ${PACKAGE_NAME} is a known target, doing nothing.")
     endif()
     #TODO: use mola namespace (mola::xxx)?
 endfunction()
@@ -209,6 +212,19 @@ function(mola_configure_app TARGETNAME)
 
   #TODO: install
 
+endfunction()
+
+
+
+# -----------------------------------------------------------------------------
+# mola_message_verbose(...)
+# Maps to `message(STATUS ...)` if the environment variable VERBOSE is !=0.
+# Otherwise, does nothing.
+# -----------------------------------------------------------------------------
+function(mola_message_verbose)
+	if ($ENV{VERBOSE})
+		message(STATUS ${ARGN})
+	endif()
 endfunction()
 
 
