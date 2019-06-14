@@ -13,6 +13,9 @@ cmake_minimum_required(VERSION 3.4)
 # Tell CMake we'll use C++ for use in its tests/flags
 project(mola-common)
 
+# Instrumental lib:
+add_library(${PROJECT_NAME} INTERFACE)
+
 # Project version:
 include(mola-version.cmake)
 

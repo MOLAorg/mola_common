@@ -298,3 +298,21 @@ function(mola_add_executable)
 	    )
     endif()
 endfunction()
+
+
+# -----------------------------------------------------------------------------
+# list_subdirectories(retval curdir)
+#
+# Lists all subdirectories. Code from MRPT.
+# -----------------------------------------------------------------------------
+function(list_subdirectories retval curdir)
+  file(GLOB sub_dir RELATIVE ${curdir} *)
+  set(list_of_dirs "")
+  foreach(dir ${sub_dir})
+    string(SUBSTRING ${dir} 0 1 dir1st)
+    if(IS_DIRECTORY ${curdir}/${dir} AND NOT ${dir1st} STREQUAL "." AND NOT ${dir} STREQUAL "CMakeFiles")
+        set(list_of_dirs ${list_of_dirs} ${dir})
+    endif()
+  endforeach()
+  set(${retval} ${list_of_dirs} PARENT_SCOPE)
+endfunction()
