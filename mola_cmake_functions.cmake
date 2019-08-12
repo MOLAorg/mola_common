@@ -316,3 +316,17 @@ function(list_subdirectories retval curdir)
   endforeach()
   set(${retval} ${list_of_dirs} PARENT_SCOPE)
 endfunction()
+
+# -----------------------------------------------------------------------------
+# mola_find_package_or_return(package_name)
+#
+# Calls find_package(package_name QUIET), and if it is not found, prints a
+# descriptive message and call "return()" to exit the current cmake script.
+# -----------------------------------------------------------------------------
+macro(mola_find_package_or_return PACKAGE_NAME)
+	find_package(${PACKAGE_NAME} QUIET)
+	if (NOT ${PACKAGE_NAME}_FOUND)
+		message(WARNING "${PROJECT_NAME}: Skipping due to missing dependency `${PACKAGE_NAME}`")
+		return()
+	endif()
+endmacro()
