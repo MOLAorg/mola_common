@@ -134,7 +134,7 @@ function(mola_set_target_build_options TARGETNAME)
   # Optimization:
   # -------------------------
   if((NOT MSVC) AND (NOT CMAKE_CROSSCOMPILING))
-    option(MOLA_BUILD_MARCH_NATIVE "Build with `-march=\"native\"`" ON)
+    option(MOLA_BUILD_MARCH_NATIVE "Build with `-march=\"native\"`" OFF)
 
     if (MOLA_BUILD_MARCH_NATIVE)
       # Note 1: GTSAM must be built with identical flags to avoid crashes.
