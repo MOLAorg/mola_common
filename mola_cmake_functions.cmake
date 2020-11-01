@@ -7,17 +7,23 @@
 # Released under GNU GPL v3. See LICENSE file
 # ------------------------------------------------------------------------------
 
+include(GNUInstallDirs) # for install dirs in multilib
+include(CMakePackageConfigHelpers)
+
 # This file defines utility CMake functions to ensure uniform settings all
 # accross MOLA modules, programs, and tests.
 # Usage:
 #   include(mola_cmake_functions)
 #
 
+# Project version:
+include(${CMAKE_CURRENT_LIST_DIR}/mola-version.cmake)
+
+set(_MOLACOMMON_MODULE_BASE_DIR "${CMAKE_CURRENT_LIST_DIR}")
+
 if (NOT DEFINED MOLA_VERSION_NUMBER_MAJOR)
 	message(ERROR "MOLA_VERSION_NUMBER_MAJOR not defined: use `find_package(mola-common)`")
 endif()
-
-include(GNUInstallDirs) # for install dirs in multilib
 
 # Avoid the need for DLL export/import macros in Windows:
 if (WIN32)
@@ -151,7 +157,7 @@ function(mola_set_target_build_options TARGETNAME)
 endfunction()
 
 # -----------------------------------------------------------------------------
-# mola_configure_library(target)
+# mola_configure_library(target [dep1 dep2...])
 #
 # Define a consistent install behavior for cmake-based library project:
 # -----------------------------------------------------------------------------
@@ -198,7 +204,20 @@ function(mola_configure_library TARGETNAME)
   export(
     TARGETS ${TARGETNAME}
     # export to ROOT cmake directory (when building MOLA as a superproject)
-    FILE ${CMAKE_BINARY_DIR}/${TARGETNAME}-config.cmake
+    FILE ${CMAKE_BINARY_DIR}/${TARGETNAME}-targets.cmake
+  )
+  # And generate the -config.cmake file:
+  set(ALL_DEPS_LIST ${ARGN}) # used in xxx-config.cmake.in
+  set(MOLA_MODULE_NAME ${TARGETNAME})
+  configure_file(
+    "${_MOLACOMMON_MODULE_BASE_DIR}/mola-xxx-config.cmake.in"
+    "${CMAKE_BINARY_DIR}/${TARGETNAME}-config.cmake" IMMEDIATE @ONLY
+  )
+  # Version file:
+  write_basic_package_version_file(
+    "${CMAKE_BINARY_DIR}/${TARGETNAME}-config-version.cmake"
+    VERSION ${MOLA_VERSION_NUMBER_MAJOR}.${MOLA_VERSION_NUMBER_MINOR}.${MOLA_VERSION_NUMBER_PATCH}
+    COMPATIBILITY AnyNewerVersion
   )
 
 endfunction()
@@ -236,14 +255,16 @@ endfunction()
 #	SOURCES ${SRC_FILES}
 #	[PUBLIC_LINK_LIBRARIES lib1 lib2]
 #	[PRIVATE_LINK_LIBRARIES lib3 lib4]
+# [CMAKE_DEPENDENCIES pkg1 pkg2]
 #	)
 #
-# Defines a MOLA library
+# Defines a MOLA library. `CMAKE_DEPENDENCIES` enumerates those packages
+# that needs to be find_package'd in this library's xxx-config.cmake file.
 # -----------------------------------------------------------------------------
 function(mola_add_library)
     set(options "")
     set(oneValueArgs TARGET)
-    set(multiValueArgs SOURCES PUBLIC_LINK_LIBRARIES PRIVATE_LINK_LIBRARIES)
+    set(multiValueArgs SOURCES PUBLIC_LINK_LIBRARIES PRIVATE_LINK_LIBRARIES CMAKE_DEPENDENCIES)
     cmake_parse_arguments(MOLA_ADD_LIBRARY "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
     add_library(${MOLA_ADD_LIBRARY_TARGET}
@@ -253,7 +274,7 @@ function(mola_add_library)
 
     # Define common flags:
     mola_set_target_build_options(${MOLA_ADD_LIBRARY_TARGET})
-    mola_configure_library(${MOLA_ADD_LIBRARY_TARGET})
+    mola_configure_library(${MOLA_ADD_LIBRARY_TARGET} ${MOLA_ADD_LIBRARY_CMAKE_DEPENDENCIES})
 
     # lib Dependencies:
     target_link_libraries(${MOLA_ADD_LIBRARY_TARGET}
@@ -302,7 +323,11 @@ function(mola_add_executable)
 
     # install:
     if (NOT MOLA_ADD_EXECUTABLE_DONT_INSTALL)
-      install(TARGETS ${MOLA_ADD_EXECUTABLE_TARGET})
+      install(TARGETS ${MOLA_ADD_EXECUTABLE_TARGET}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    )
     endif()
 endfunction()
 
