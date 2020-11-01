@@ -184,7 +184,7 @@ function(mola_configure_library TARGETNAME)
   set_target_properties(${TARGETNAME} PROPERTIES FOLDER "MOLA-modules")
 
   # Install lib:
-  install(TARGETS ${TARGETNAME} EXPORT ${TARGETNAME}-config
+  install(TARGETS ${TARGETNAME} EXPORT ${TARGETNAME}-targets
       ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
       LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
       RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
@@ -196,9 +196,6 @@ function(mola_configure_library TARGETNAME)
       DESTINATION ${CMAKE_INSTALL_PREFIX}/include
     )
   endif()
-
-  # Install cmake config module
-  install(EXPORT ${TARGETNAME}-config DESTINATION share/${TARGETNAME}/cmake)
 
   # make project importable from build_dir:
   export(
@@ -220,6 +217,15 @@ function(mola_configure_library TARGETNAME)
     COMPATIBILITY AnyNewerVersion
   )
 
+	# Install cmake config module
+  install(EXPORT ${TARGETNAME}-targets DESTINATION share/${TARGETNAME}/cmake)
+	install(
+		FILES
+			${CMAKE_BINARY_DIR}/${TARGETNAME}-config.cmake
+			${CMAKE_BINARY_DIR}/${TARGETNAME}-config-version.cmake
+		DESTINATION
+			share/${TARGETNAME}/cmake
+	)
 endfunction()
 
 # -----------------------------------------------------------------------------
