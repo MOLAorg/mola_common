@@ -337,6 +337,48 @@ function(mola_add_executable)
     endif()
 endfunction()
 
+
+# -----------------------------------------------------------------------------
+# mola_add_test(
+#	TARGET name
+#	SOURCES ${SRC_FILES}
+#	[LINK_LIBRARIES lib1 lib2]
+#	)
+#
+# Defines a MOLA unit test
+# -----------------------------------------------------------------------------
+function(mola_add_test)
+    set(oneValueArgs TARGET)
+    set(multiValueArgs SOURCES LINK_LIBRARIES)
+    cmake_parse_arguments(MOLA_ADD_TEST "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+
+    add_executable(${MOLA_ADD_TEST_TARGET}
+      ${MOLA_ADD_TEST_SOURCES}
+    )
+
+    # Define common flags:
+    mola_set_target_build_options(${MOLA_ADD_TEST_TARGET})
+    mola_configure_app(${MOLA_ADD_TEST_TARGET})
+
+    # lib Dependencies:
+    if (MOLA_ADD_TEST_LINK_LIBRARIES)
+      target_link_libraries(
+      ${MOLA_ADD_TEST_TARGET}
+      ${MOLA_ADD_TEST_LINK_LIBRARIES}
+      )
+    endif()
+
+    # Run it:
+    #add_custom_target(run_${MOLA_ADD_TEST_TARGET} COMMAND $<TARGET_FILE:${MOLA_ADD_TEST_TARGET}>)
+    add_test(${MOLA_ADD_TEST_TARGET}_build "${CMAKE_COMMAND}" --build ${CMAKE_CURRENT_BINARY_DIR} --target ${MOLA_ADD_TEST_TARGET})
+    add_test(run_${MOLA_ADD_TEST_TARGET} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${MOLA_ADD_TEST_TARGET})
+    set_tests_properties(run_${MOLA_ADD_TEST_TARGET} PROPERTIES DEPENDS ${MOLA_ADD_TEST_TARGET}_build)
+
+    add_custom_target(run_${MOLA_ADD_TEST_TARGET} COMMAND ${MOLA_ADD_TEST_TARGET})
+    add_dependencies(run_${MOLA_ADD_TEST_TARGET} ${MOLA_ADD_TEST_TARGET})
+
+endfunction()
+
 # -----------------------------------------------------------------------------
 # list_subdirectories(retval curdir)
 #
