@@ -153,7 +153,6 @@ function(mola_set_target_build_options TARGETNAME)
       target_compile_options(${TARGETNAME} PRIVATE -O3)
     endif()
   endif()
-
 endfunction()
 
 # -----------------------------------------------------------------------------
@@ -368,6 +367,11 @@ function(mola_add_test)
       )
     endif()
 
+    # Macro for source dir path:
+    target_compile_definitions(${MOLA_ADD_TEST_TARGET} PRIVATE
+        MOLA_MODULE_SOURCE_DIR=\"${CMAKE_CURRENT_SOURCE_DIR}\"
+        )
+    
     # Run it:
     #add_custom_target(run_${MOLA_ADD_TEST_TARGET} COMMAND $<TARGET_FILE:${MOLA_ADD_TEST_TARGET}>)
     add_test(${MOLA_ADD_TEST_TARGET}_build "${CMAKE_COMMAND}" --build ${CMAKE_CURRENT_BINARY_DIR} --target ${MOLA_ADD_TEST_TARGET})
