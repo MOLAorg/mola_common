@@ -217,13 +217,18 @@ function(mola_configure_library TARGETNAME)
   )
 
 	# Install cmake config module
-  install(EXPORT ${TARGETNAME}-targets DESTINATION share/${TARGETNAME}/cmake)
+	install(
+		EXPORT
+			${TARGETNAME}-targets
+		DESTINATION
+			${CMAKE_INSTALL_LIBDIR}/${TARGETNAME}/cmake
+	)
 	install(
 		FILES
 			${CMAKE_BINARY_DIR}/${TARGETNAME}-config.cmake
 			${CMAKE_BINARY_DIR}/${TARGETNAME}-config-version.cmake
 		DESTINATION
-			share/${TARGETNAME}/cmake
+			${CMAKE_INSTALL_LIBDIR}/${TARGETNAME}/cmake
 	)
 endfunction()
 
@@ -371,7 +376,7 @@ function(mola_add_test)
     target_compile_definitions(${MOLA_ADD_TEST_TARGET} PRIVATE
         MOLA_MODULE_SOURCE_DIR=\"${CMAKE_CURRENT_SOURCE_DIR}\"
         )
-    
+
     # Run it:
     #add_custom_target(run_${MOLA_ADD_TEST_TARGET} COMMAND $<TARGET_FILE:${MOLA_ADD_TEST_TARGET}>)
     add_test(${MOLA_ADD_TEST_TARGET}_build "${CMAKE_COMMAND}" --build ${CMAKE_CURRENT_BINARY_DIR} --target ${MOLA_ADD_TEST_TARGET})
