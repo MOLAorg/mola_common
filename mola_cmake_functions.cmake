@@ -79,6 +79,20 @@ set(CMAKE_IMPORT_LIBRARY_PREFIX "lib")
 set(CMAKE_STATIC_LIBRARY_PREFIX "lib")
 set(CMAKE_DEBUG_POSTFIX "-dbg")
 
+
+# GNU GCC options ================================
+if(CMAKE_COMPILER_IS_GNUCXX)
+	# BUILD_TYPE: SanitizeAddress
+	set(CMAKE_CXX_FLAGS_SANITIZEADDRESS "-fsanitize=address  -fsanitize=leak -g")
+	set(CMAKE_EXE_LINKER_FLAGS_SANITIZEADDRESS "-fsanitize=address  -fsanitize=leak")
+	set(CMAKE_SHARED_LINKER_FLAGS_SANITIZEADDRESS "-fsanitize=address  -fsanitize=leak")
+
+	# BUILD_TYPE: SanitizeThread
+	set(CMAKE_CXX_FLAGS_SANITIZETHREAD "-fsanitize=thread -g")
+	set(CMAKE_EXE_LINKER_FLAGS_SANITIZETHREAD "-fsanitize=thread")
+	set(CMAKE_SHARED_LINKER_FLAGS_SANITIZETHREAD "-fsanitize=thread")
+endif()
+
 # -----------------------------------------------------------------------------
 # find_mola_package(package_name)
 #
