@@ -215,7 +215,12 @@ function(mola_configure_library TARGETNAME)
     TARGETS ${TARGETNAME}
     # export to ROOT cmake directory (when building MOLA as a superproject)
     FILE ${CMAKE_BINARY_DIR}/${TARGETNAME}-targets.cmake
+	NAMESPACE mola::
   )
+
+  # Add alias to use the namespaced name within local builds from source:
+  add_library(mola::${TARGETNAME} ALIAS ${TARGETNAME})
+
   # And generate the -config.cmake file:
   set(ALL_DEPS_LIST ${ARGN}) # used in xxx-config.cmake.in
   set(MOLA_MODULE_NAME ${TARGETNAME})
