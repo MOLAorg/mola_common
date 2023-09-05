@@ -17,7 +17,13 @@ include(CMakePackageConfigHelpers)
 #
 
 # Project version:
-include(${CMAKE_CURRENT_LIST_DIR}/mola-version.cmake)
+if (mola_common_VERSION)  # If installed via colcon+ament
+  set(MOLA_VERSION_NUMBER_MAJOR ${mola_common_VERSION_MAJOR})
+  set(MOLA_VERSION_NUMBER_MINOR ${mola_common_VERSION_MINOR})
+  set(MOLA_VERSION_NUMBER_PATCH ${mola_common_VERSION_PATCH})
+else() # Installed without ament:
+  include(${CMAKE_CURRENT_LIST_DIR}/mola-version.cmake)
+endif()
 
 set(_MOLACOMMON_MODULE_BASE_DIR "${CMAKE_CURRENT_LIST_DIR}")
 
