@@ -7,7 +7,7 @@
 # Released under GNU GPL v3. See LICENSE file
 # ------------------------------------------------------------------------------
 
-# mola-common: Defined common CMake variables and functions to unify building
+# mola_common: Defined common CMake variables and functions to unify building
 # of all MOLA modules.
 #
 # Main functions (refer to their docs in mola_cmake_functions.cmake):

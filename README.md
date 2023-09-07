@@ -1,4 +1,4 @@
-# mola-common
+# mola_common
 Common CMake scripts to all MOLA modules
 
 Refer to the [main MOLA repository](https://github.com/MOLAorg/mola).
