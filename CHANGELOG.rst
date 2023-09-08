@@ -2,8 +2,8 @@
 Changelog for package mola_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.2.2 (2023-09-08)
+------------------
 * Fix package name in docs
 * Generate ament-correct package for ROS2 builds
 * fix lib name in cmake warning message
