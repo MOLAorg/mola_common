@@ -2,6 +2,12 @@
 Changelog for package mola_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Bump cmake_minimum_required to 3.5
+* Fix clang warning
+* Contributors: Jose Luis Blanco-Claraco
+
 0.3.0 (2024-01-07)
 ------------------
 * Fix usage of mola:: cmake prefix
