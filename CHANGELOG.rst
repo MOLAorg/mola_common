@@ -2,8 +2,8 @@
 Changelog for package mola_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.3.2 (2024-08-09)
+------------------
 * Fix ament_xmllint warnings
 * Contributors: Jose Luis Blanco-Claraco
 
