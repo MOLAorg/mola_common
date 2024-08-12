@@ -12,8 +12,12 @@ cmake_minimum_required(VERSION 3.5)
 
 if("$ENV{ROS_VERSION}" STREQUAL "2")
 	set(DETECTED_ROS2 TRUE)
+	set(PACKAGE_ROS_VERSION 2)
+elseif("$ENV{ROS_VERSION}" STREQUAL "1")
+	set(DETECTED_ROS1 TRUE)
+	set(PACKAGE_ROS_VERSION 1)
+	set(CMAKE_CXX_STANDARD 14)
 endif()
-
 
 project(mola_common)
 
@@ -30,14 +34,13 @@ include(mola-version.cmake)
 set(mola_common_DIR ${CMAKE_CURRENT_SOURCE_DIR} CACHE PATH "Path to mola_common")
 
 # not ament-based builds (standalone, w/o ROS):
-if (NOT DETECTED_ROS2)
+if ((NOT DETECTED_ROS2) AND (NOT DETECTED_ROS1))
 	# Generate: mola_common-version.cmake
 	include(CMakePackageConfigHelpers)
 
 	if(NOT ${CMAKE_VERSION} VERSION_LESS "3.14.0")
 		set(ARCH_INDEP_FLAG "ARCH_INDEPENDENT")
 	endif()
-
 
 	write_basic_package_version_file(
 		# generate to the topmost root binary dir:
@@ -56,7 +59,6 @@ if (NOT DETECTED_ROS2)
 		# Parse: "@var_names@" only
 		@ONLY
 	)
-
 
 	# Install files:
 	install(
@@ -106,6 +108,3 @@ if (DETECTED_ROS2)
 
 	ament_package()
 endif()
-
-
-
