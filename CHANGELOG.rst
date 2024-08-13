@@ -2,8 +2,8 @@
 Changelog for package mola_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.3.3 (2024-08-14)
+------------------
 * make the package to build on ROS 1 too
 * Contributors: Jose Luis Blanco-Claraco
 
