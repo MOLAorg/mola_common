@@ -81,6 +81,21 @@ if ((NOT DETECTED_ROS2) AND (NOT DETECTED_ROS1))
 	endif()
 endif()
 
+
+# -----------------------------------------------------------------------------
+#  ROS1
+# -----------------------------------------------------------------------------
+if (DETECTED_ROS1)
+	# Find the required catkin packages
+	find_package(catkin REQUIRED)
+
+	# Declare this project as a catkin package
+	catkin_package()
+endif()
+
+# -----------------------------------------------------------------------------
+#  common
+# -----------------------------------------------------------------------------
 # Install files common to both, ROS and non-ROS builds:
 install(
 	FILES
