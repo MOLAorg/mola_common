@@ -2,6 +2,11 @@
 Changelog for package mola_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* make the package to build on ROS 1 too
+* Contributors: Jose Luis Blanco-Claraco
+
 0.3.2 (2024-08-09)
 ------------------
 * Fix ament_xmllint warnings
