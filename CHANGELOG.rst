@@ -2,6 +2,11 @@
 Changelog for package mola_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Reorganize cmake scripts to make them compatible with both ROS1 catkin and ROS2 ament
+* Contributors: Jose Luis Blanco-Claraco
+
 0.3.3 (2024-08-14)
 ------------------
 * make the package to build on ROS 1 too
