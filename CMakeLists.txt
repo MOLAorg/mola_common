@@ -83,6 +83,21 @@ endif()
 
 
 # -----------------------------------------------------------------------------
+#  common
+# -----------------------------------------------------------------------------
+set(CUSTOM_CMAKE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+
+# Install files common to both, ROS and non-ROS builds:
+install(
+	FILES
+		${CUSTOM_CMAKE_DIR}/mola_cmake_functions.cmake
+		${CUSTOM_CMAKE_DIR}/mola-xxx-config.cmake.in
+		DESTINATION
+			share/${PROJECT_NAME}/cmake
+)
+
+
+# -----------------------------------------------------------------------------
 #  ROS1
 # -----------------------------------------------------------------------------
 if (DETECTED_ROS1)
@@ -90,20 +105,10 @@ if (DETECTED_ROS1)
 	find_package(catkin REQUIRED)
 
 	# Declare this project as a catkin package
-	catkin_package()
+	catkin_package(
+		CFG_EXTRAS mola_cmake_functions.cmake
+	)
 endif()
-
-# -----------------------------------------------------------------------------
-#  common
-# -----------------------------------------------------------------------------
-# Install files common to both, ROS and non-ROS builds:
-install(
-	FILES
-		${CMAKE_SOURCE_DIR}/mola_cmake_functions.cmake
-		${CMAKE_SOURCE_DIR}/mola-xxx-config.cmake.in
-		DESTINATION
-			share/${PROJECT_NAME}/cmake
-)
 
 # -----------------------------------------------------------------------------
 #  ROS2
@@ -119,7 +124,7 @@ if (DETECTED_ROS2)
 	# Add custom mola cmake macros, as in our non-ament (ROS2) config.cmake file:
 	# See: mola_common-config.cmake.in
 
-	set(mola_common_CONFIG_EXTRAS mola_cmake_functions.cmake)
-
-	ament_package()
+	ament_package(
+		CONFIG_EXTRAS cmake/mola_cmake_functions.cmake
+	)
 endif()
