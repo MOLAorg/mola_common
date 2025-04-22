@@ -128,3 +128,9 @@ if (DETECTED_ROS2)
 		CONFIG_EXTRAS cmake/mola_cmake_functions.cmake
 	)
 endif()
+
+if (NOT DETECTED_ROS1 AND NOT DETECTED_ROS2)
+  # Silent warnings:
+  set(dummy CATKIN_INSTALL_INTO_PREFIX_ROOT)
+  unset(dummy)
+endif()
