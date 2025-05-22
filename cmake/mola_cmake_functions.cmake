@@ -11,7 +11,7 @@ include(GNUInstallDirs) # for install dirs in multilib
 include(CMakePackageConfigHelpers)
 
 # This file defines utility CMake functions to ensure uniform settings all
-# accross MOLA modules, programs, and tests.
+# across MOLA modules, programs, and tests.
 # Usage:
 #   include(mola_cmake_functions)
 #
@@ -28,7 +28,7 @@ endif()
 set(_MOLACOMMON_MODULE_BASE_DIR "${CMAKE_CURRENT_LIST_DIR}")
 
 if (NOT DEFINED MOLA_VERSION_NUMBER_MAJOR)
-	message(ERROR "MOLA_VERSION_NUMBER_MAJOR not defined: use `find_package(mola_common)`")
+  message(ERROR "MOLA_VERSION_NUMBER_MAJOR not defined: use `find_package(mola_common)`")
 endif()
 
 # Avoid the need for DLL export/import macros in Windows:
@@ -69,7 +69,7 @@ if (WIN32)
   set(MOLA_DLL_VERSION_POSTFIX
     "${MOLA_VERSION_NUMBER_MAJOR}${MOLA_VERSION_NUMBER_MINOR}${MOLA_VERSION_NUMBER_PATCH}_${MOLA_COMPILER_NAME}_x${MOLA_WORD_SIZE}")
   if ($ENV{VERBOSE})
-  	message(STATUS "Using DLL version postfix: ${MOLA_DLL_VERSION_POSTFIX}")
+    message(STATUS "Using DLL version postfix: ${MOLA_DLL_VERSION_POSTFIX}")
   endif()
 else()
   set(MOLA_DLL_VERSION_POSTFIX "")
@@ -88,15 +88,15 @@ set(CMAKE_DEBUG_POSTFIX "-dbg")
 
 # GNU GCC options ================================
 if(CMAKE_COMPILER_IS_GNUCXX)
-	# BUILD_TYPE: SanitizeAddress
-	set(CMAKE_CXX_FLAGS_SANITIZEADDRESS "-fsanitize=address  -fsanitize=leak -g")
-	set(CMAKE_EXE_LINKER_FLAGS_SANITIZEADDRESS "-fsanitize=address  -fsanitize=leak")
-	set(CMAKE_SHARED_LINKER_FLAGS_SANITIZEADDRESS "-fsanitize=address  -fsanitize=leak")
+  # BUILD_TYPE: SanitizeAddress
+  set(CMAKE_CXX_FLAGS_SANITIZEADDRESS "-fsanitize=address  -fsanitize=leak -g")
+  set(CMAKE_EXE_LINKER_FLAGS_SANITIZEADDRESS "-fsanitize=address  -fsanitize=leak")
+  set(CMAKE_SHARED_LINKER_FLAGS_SANITIZEADDRESS "-fsanitize=address  -fsanitize=leak")
 
-	# BUILD_TYPE: SanitizeThread
-	set(CMAKE_CXX_FLAGS_SANITIZETHREAD "-fsanitize=thread -g")
-	set(CMAKE_EXE_LINKER_FLAGS_SANITIZETHREAD "-fsanitize=thread")
-	set(CMAKE_SHARED_LINKER_FLAGS_SANITIZETHREAD "-fsanitize=thread")
+  # BUILD_TYPE: SanitizeThread
+  set(CMAKE_CXX_FLAGS_SANITIZETHREAD "-fsanitize=thread -g")
+  set(CMAKE_EXE_LINKER_FLAGS_SANITIZETHREAD "-fsanitize=thread")
+  set(CMAKE_SHARED_LINKER_FLAGS_SANITIZETHREAD "-fsanitize=thread")
 endif()
 
 # -----------------------------------------------------------------------------
@@ -240,21 +240,21 @@ function(mola_configure_library TARGETNAME)
     COMPATIBILITY AnyNewerVersion
   )
 
-	# Install cmake config module
-	install(
-		EXPORT
-			${TARGETNAME}-targets
-		DESTINATION
-			${CMAKE_INSTALL_LIBDIR}/${TARGETNAME}/cmake
-		NAMESPACE mola::
-	)
-	install(
-		FILES
-			${CMAKE_BINARY_DIR}/${TARGETNAME}-config.cmake
-			${CMAKE_BINARY_DIR}/${TARGETNAME}-config-version.cmake
-		DESTINATION
-			${CMAKE_INSTALL_LIBDIR}/${TARGETNAME}/cmake
-	)
+  # Install cmake config module
+  install(
+    EXPORT
+      ${TARGETNAME}-targets
+    DESTINATION
+      ${CMAKE_INSTALL_LIBDIR}/${TARGETNAME}/cmake
+    NAMESPACE mola::
+  )
+  install(
+    FILES
+      ${CMAKE_BINARY_DIR}/${TARGETNAME}-config.cmake
+      ${CMAKE_BINARY_DIR}/${TARGETNAME}-config-version.cmake
+    DESTINATION
+      ${CMAKE_INSTALL_LIBDIR}/${TARGETNAME}/cmake
+  )
 endfunction()
 
 # -----------------------------------------------------------------------------
@@ -278,9 +278,9 @@ endfunction()
 # Otherwise, does nothing.
 # -----------------------------------------------------------------------------
 function(mola_message_verbose)
-	if ($ENV{VERBOSE})
-		message(STATUS ${ARGN})
-	endif()
+  if ($ENV{VERBOSE})
+    message(STATUS ${ARGN})
+  endif()
 endfunction()
 
 
@@ -437,9 +437,26 @@ endfunction()
 # descriptive message and call "return()" to exit the current cmake script.
 # -----------------------------------------------------------------------------
 macro(mola_find_package_or_return PACKAGE_NAME)
-	find_package(${PACKAGE_NAME} QUIET)
-	if (NOT ${PACKAGE_NAME}_FOUND)
-		message(WARNING "${PROJECT_NAME}: Skipping due to missing dependency `${PACKAGE_NAME}`")
-		return()
-	endif()
+  find_package(${PACKAGE_NAME} QUIET)
+  if (NOT ${PACKAGE_NAME}_FOUND)
+    message(WARNING "${PROJECT_NAME}: Skipping due to missing dependency `${PACKAGE_NAME}`")
+    return()
+  endif()
+endmacro()
+
+
+# Converts a version like "1.2.3" into a string "0x10203",
+# or "3.4.19" into "0x30413".
+# Usage: mola_version_to_hexadecimal(TARGET_VAR "1.2.3")
+macro(mola_version_to_hexadecimal OUT_VAR IN_VERSION)
+  string(REGEX MATCHALL "[0-9]+" VERSION_PARTS "${IN_VERSION}")
+  list(GET VERSION_PARTS 0 VERSION_NUMBER_MAJOR)
+  list(GET VERSION_PARTS 1 VERSION_NUMBER_MINOR)
+  list(GET VERSION_PARTS 2 VERSION_NUMBER_PATCH)
+
+  # Convert each part to hex:
+  math(EXPR ${OUT_VAR}
+  "(${VERSION_NUMBER_MAJOR} << 16) + \
+    (${VERSION_NUMBER_MINOR} << 8) + \
+    (${VERSION_NUMBER_PATCH})" OUTPUT_FORMAT HEXADECIMAL)
 endmacro()
