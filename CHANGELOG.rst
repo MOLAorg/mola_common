@@ -2,8 +2,8 @@
 Changelog for package mola_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.4.1 (2025-05-22)
+------------------
 * add mola_version_to_hexadecimal() to mola_cmake_functions (and fix tab formatting)
 * Update package license to 'BSD-3-Clause'
 * Silent warnings if built w/o any version of ROS
