@@ -2,6 +2,14 @@
 Changelog for package mola_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* add mola_version_to_hexadecimal() to mola_cmake_functions (and fix tab formatting)
+* Update package license to 'BSD-3-Clause'
+* Silent warnings if built w/o any version of ROS
+* Fix text references to license (correct one for this package is BSD-3)
+* Contributors: Jose Luis Blanco-Claraco
+
 0.4.0 (2024-08-20)
 ------------------
 * Reorganize cmake scripts to make them compatible with both ROS1 catkin and ROS2 ament
