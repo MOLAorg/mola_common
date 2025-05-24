@@ -129,8 +129,10 @@ if (DETECTED_ROS2)
 	)
 endif()
 
+# Silent cmake warnings on unused variables:
 if (NOT DETECTED_ROS1 AND NOT DETECTED_ROS2)
-  # Silent warnings:
   set(dummy CATKIN_INSTALL_INTO_PREFIX_ROOT)
   unset(dummy)
 endif()
+set(dummy CMAKE_EXPORT_COMPILE_COMMANDS)
+unset(dummy)
