@@ -2,8 +2,8 @@
 Changelog for package mola_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.5.0 (2025-08-28)
+------------------
 * FIX: auto-created foo_version.cmake file now uses the caller's version from package.xml instead of mola_common version
 * Update ROS badges in README
 * cmake: fix correct cmake silent warnings of non-used variables
