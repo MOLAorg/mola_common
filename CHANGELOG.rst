@@ -2,6 +2,11 @@
 Changelog for package mola_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Fix issue: cmake scripts attempt to read package.xml of the caller even if not defining a module
+* Contributors: Jose Luis Blanco-Claraco
+
 0.5.0 (2025-08-28)
 ------------------
 * FIX: auto-created foo_version.cmake file now uses the caller's version from package.xml instead of mola_common version
