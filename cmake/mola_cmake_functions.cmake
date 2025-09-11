@@ -16,19 +16,6 @@ include(CMakePackageConfigHelpers)
 #   include(mola_cmake_functions)
 #
 
-# ---------
-# Project version: autodetect from caller package.xml
-# Example line:" <version>0.3.2</version>"
-file(READ ${CMAKE_SOURCE_DIR}/package.xml contentPackageXML)
-string(REGEX MATCH "<version>([0-9\.]*)</version>" _ ${contentPackageXML})
-set(MP2P_ICP_VERSION ${CMAKE_MATCH_1})
-message(STATUS "MP2P_ICP version: ${MP2P_ICP_VERSION} (detected in package.xml)")
-string(REGEX MATCH "^([0-9]+)\\.([0-9]+)\\.([0-9]+)" _ ${MP2P_ICP_VERSION})
-set(PKG_VERSION_NUMBER_MAJOR ${CMAKE_MATCH_1})
-set(PKG_VERSION_NUMBER_MINOR ${CMAKE_MATCH_2})
-set(PKG_VERSION_NUMBER_PATCH ${CMAKE_MATCH_3})
-# ---------
-
 
 set(_MOLACOMMON_MODULE_BASE_DIR "${CMAKE_CURRENT_LIST_DIR}")
 
@@ -63,17 +50,6 @@ if (MSVC)
   set(MOLA_COMPILER_NAME "msvc${MSVC_VERSION_3D}")
 else()
   set(MOLA_COMPILER_NAME "${CMAKE_CXX_COMPILER_ID}")
-endif()
-
-# Build DLL full name:
-if (WIN32)
-  set(MOLA_DLL_VERSION_POSTFIX
-    "${PKG_VERSION_NUMBER_MAJOR}${PKG_VERSION_NUMBER_MINOR}${PKG_VERSION_NUMBER_PATCH}_${MOLA_COMPILER_NAME}_x${MOLA_WORD_SIZE}")
-  if ($ENV{VERBOSE})
-    message(STATUS "Using DLL version postfix: ${MOLA_DLL_VERSION_POSTFIX}")
-  endif()
-else()
-  set(MOLA_DLL_VERSION_POSTFIX "")
 endif()
 
 # Group projects in "folders"
@@ -187,6 +163,30 @@ function(mola_configure_library TARGETNAME)
       $<INSTALL_INTERFACE:include>
       PRIVATE src
     )
+
+  # ---------
+  # Project version: autodetect from caller package.xml
+  # Example line:" <version>0.3.2</version>"
+  file(READ ${CMAKE_SOURCE_DIR}/package.xml contentPackageXML)
+  string(REGEX MATCH "<version>([0-9\.]*)</version>" _ ${contentPackageXML})
+  set(MP2P_ICP_VERSION ${CMAKE_MATCH_1})
+  message(STATUS "MP2P_ICP version: ${MP2P_ICP_VERSION} (detected in package.xml)")
+  string(REGEX MATCH "^([0-9]+)\\.([0-9]+)\\.([0-9]+)" _ ${MP2P_ICP_VERSION})
+  set(PKG_VERSION_NUMBER_MAJOR ${CMAKE_MATCH_1})
+  set(PKG_VERSION_NUMBER_MINOR ${CMAKE_MATCH_2})
+  set(PKG_VERSION_NUMBER_PATCH ${CMAKE_MATCH_3})
+  # Build DLL full name:
+  if (WIN32)
+    set(MOLA_DLL_VERSION_POSTFIX
+      "${PKG_VERSION_NUMBER_MAJOR}${PKG_VERSION_NUMBER_MINOR}${PKG_VERSION_NUMBER_PATCH}_${MOLA_COMPILER_NAME}_x${MOLA_WORD_SIZE}")
+    if ($ENV{VERBOSE})
+      message(STATUS "Using DLL version postfix: ${MOLA_DLL_VERSION_POSTFIX}")
+    endif()
+  else()
+    set(MOLA_DLL_VERSION_POSTFIX "")
+  endif()
+  # ---------
+
 
   # Dynamic libraries output options:
   # -----------------------------------
