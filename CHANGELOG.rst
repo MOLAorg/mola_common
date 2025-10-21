@@ -2,8 +2,8 @@
 Changelog for package mola_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.5.2 (2025-10-21)
+------------------
 * Removed leftover inclusion of old mola-version.cmake file
 * Contributors: Jose Luis Blanco-Claraco
 
