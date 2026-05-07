@@ -2,6 +2,11 @@
 Changelog for package mola_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* bump min required cmake version to 3.22
+* Contributors: Jose Luis Blanco-Claraco
+
 0.5.2 (2025-10-21)
 ------------------
 * Removed leftover inclusion of old mola-version.cmake file
