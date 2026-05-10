@@ -31,6 +31,13 @@ else()
   set(MOLA_WORD_SIZE 32)
 endif()
 
+# Use ccache if available and not already set via -DCMAKE_<LANG>_COMPILER_LAUNCHER
+find_program(CCACHE_PROGRAM ccache)
+if(CCACHE_PROGRAM AND NOT CMAKE_C_COMPILER_LAUNCHER)
+  set(CMAKE_C_COMPILER_LAUNCHER   "${CCACHE_PROGRAM}")
+  set(CMAKE_CXX_COMPILER_LAUNCHER "${CCACHE_PROGRAM}")
+endif()
+
 # Default output dirs for libs:
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib/")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY  "${CMAKE_BINARY_DIR}/lib/")
