@@ -2,6 +2,11 @@
 Changelog for package mola_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* fix: remove stale wrong trace cmake message with each configured library
+* Contributors: Jose Luis Blanco-Claraco
+
 0.6.0 (2026-05-10)
 ------------------
 * Detect and use ccache if found
