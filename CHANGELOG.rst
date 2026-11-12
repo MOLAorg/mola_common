@@ -2,6 +2,24 @@
 Changelog for package mola_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge pull request `#1 <https://github.com/MOLAorg/mola_common/issues/1>`_ from MOLAorg/feat/no-soversion-option
+  Add MOLA_NO_SOVERSION option, for Python wheels
+* Standalone install: relocatable config, and the version from package.xml
+  The installed mola_common-config.cmake added the absolute path of the
+  source dir to CMAKE_MODULE_PATH (which did not even hold the CMake
+  functions): now it only uses its own dir, so the installed package can be
+  moved, e.g. inside a Python wheel.
+  The non-ROS version file got an empty version (".."), since the
+  MOLA_VERSION_NUMBER\_* variables were never defined, so find_package() with
+  a version failed. The project version is now read from package.xml.
+  ROS builds are not affected.
+* Add MOLA_NO_SOVERSION option to build libraries without VERSION/SOVERSION
+  Python wheels cannot hold the libfoo.so -> libfoo.so.X.Y symlinks, so
+  packaging needs a single unversioned file per library. Off by default.
+* Contributors: Jose Luis Blanco-Claraco
+
 0.6.1 (2026-05-17)
 ------------------
 * fix: remove stale wrong trace cmake message with each configured library
