@@ -19,7 +19,13 @@ elseif("$ENV{ROS_VERSION}" STREQUAL "1")
 	set(CMAKE_CXX_STANDARD 14)
 endif()
 
-project(mola_common)
+# Version, from package.xml (the one source of truth, also for ROS builds):
+file(READ "${CMAKE_CURRENT_SOURCE_DIR}/package.xml" _package_xml)
+if (NOT _package_xml MATCHES "<version>([0-9]+\\.[0-9]+\\.[0-9]+)</version>")
+	message(FATAL_ERROR "No <version> found in package.xml")
+endif()
+
+project(mola_common VERSION ${CMAKE_MATCH_1})
 
 include(GNUInstallDirs) # for install dirs in multilib
 include(CMakePackageConfigHelpers)
@@ -42,7 +48,7 @@ if ((NOT DETECTED_ROS2) AND (NOT DETECTED_ROS1))
 	write_basic_package_version_file(
 		# generate to the topmost root binary dir:
 		${CMAKE_BINARY_DIR}/mola_common-config-version.cmake
-		VERSION ${MOLA_VERSION_NUMBER_MAJOR}.${MOLA_VERSION_NUMBER_MINOR}.${MOLA_VERSION_NUMBER_PATCH}
+		VERSION ${PROJECT_VERSION}
 		COMPATIBILITY AnyNewerVersion
 		${ARCH_INDEP_FLAG}
 	)

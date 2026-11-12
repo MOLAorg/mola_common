@@ -15,12 +15,10 @@
 #  - mola_add_executable()
 #
 
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR})
-
-# TODO: Support INSTALL path
-list(APPEND CMAKE_MODULE_PATH @CMAKE_CURRENT_LIST_DIR@)
-#	$<BUILD_INTERFACE:"@mola-common_SOURCE_DIR@">
-#	$<INSTALL_INTERFACE:"${CMAKE_CURRENT_LIST_DIR}">
+# The CMake functions are installed next to this file. Only paths relative to
+# it are used, so the installed package can be moved (e.g. inside a Python
+# wheel):
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}")
 
 
 include(mola_cmake_functions)
