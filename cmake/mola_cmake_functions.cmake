@@ -200,9 +200,16 @@ function(mola_configure_library TARGETNAME)
     OUTPUT_NAME "${TARGETNAME}${MOLA_DLL_VERSION_POSTFIX}"
     COMPILE_PDB_NAME "${TARGETNAME}${MOLA_DLL_VERSION_POSTFIX}"
     COMPILE_PDB_NAME_DEBUG "${TARGETNAME}${MOLA_DLL_VERSION_POSTFIX}${CMAKE_DEBUG_POSTFIX}"
-    VERSION "${PKG_VERSION_NUMBER_MAJOR}.${PKG_VERSION_NUMBER_MINOR}.${PKG_VERSION_NUMBER_PATCH}"
-    SOVERSION ${PKG_VERSION_NUMBER_MAJOR}.${PKG_VERSION_NUMBER_MINOR}
     )
+  # Python wheels cannot hold symlinks, so they need a single, unversioned
+  # file per library instead of the usual libfoo.so -> libfoo.so.X.Y chain:
+  option(MOLA_NO_SOVERSION "Build shared libraries without VERSION/SOVERSION" OFF)
+  if (NOT MOLA_NO_SOVERSION)
+    set_target_properties(${TARGETNAME} PROPERTIES
+      VERSION "${PKG_VERSION_NUMBER_MAJOR}.${PKG_VERSION_NUMBER_MINOR}.${PKG_VERSION_NUMBER_PATCH}"
+      SOVERSION ${PKG_VERSION_NUMBER_MAJOR}.${PKG_VERSION_NUMBER_MINOR}
+      )
+  endif()
 
   # Project "folder":
   # -------------------
