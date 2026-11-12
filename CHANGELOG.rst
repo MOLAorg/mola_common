@@ -2,8 +2,8 @@
 Changelog for package mola_common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.7.0 (2026-11-12)
+------------------
 * Merge pull request `#1 <https://github.com/MOLAorg/mola_common/issues/1>`_ from MOLAorg/feat/no-soversion-option
   Add MOLA_NO_SOVERSION option, for Python wheels
 * Standalone install: relocatable config, and the version from package.xml
