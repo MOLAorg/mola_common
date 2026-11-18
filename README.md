@@ -6,11 +6,6 @@
 | ROS 2 Lyrical (u26.04) | [![Build Status](https://build.ros2.org/job/Ldev__mola_common__ubuntu_resolute_amd64/badge/icon)](https://build.ros2.org/job/Ldev__mola_common__ubuntu_resolute_amd64/) | [![Build Status](https://build.ros2.org/job/Lbin_uR64__mola_common__ubuntu_resolute_amd64__binary/badge/icon)](https://build.ros2.org/job/Lbin_uR64__mola_common__ubuntu_resolute_amd64__binary/) | [![Version](https://img.shields.io/ros/v/lyrical/mola_common)](https://index.ros.org/search/?term=mola_common) |
 | ROS 2 Rolling (u26.04) | [![Build Status](https://build.ros2.org/job/Rdev__mola_common__ubuntu_resolute_amd64/badge/icon)](https://build.ros2.org/job/Rdev__mola_common__ubuntu_resolute_amd64/) | [![Build Status](https://build.ros2.org/job/Rbin_uR64__mola_common__ubuntu_resolute_amd64__binary/badge/icon)](https://build.ros2.org/job/Rbin_uR64__mola_common__ubuntu_resolute_amd64__binary/) | [![Version](https://img.shields.io/ros/v/rolling/mola_common)](https://index.ros.org/search/?term=mola_common) |
 
-| EOL distro | Last version |
-| ---    | ---       |
-| ROS1 Noetic (u20.04) |  [![Version](https://img.shields.io/ros/v/noetic/mola_common)](https://index.ros.org/search/?term=mola_common) |
-| ROS 2 Iron (u22.04) |  [![Version](https://img.shields.io/ros/v/iron/mola_common)](https://index.ros.org/search/?term=mola_common) |
-
 
 # mola_common
 Common CMake scripts to all MOLA modules
